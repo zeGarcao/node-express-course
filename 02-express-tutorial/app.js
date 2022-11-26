@@ -1,27 +1,21 @@
-// const app = require("express")();
 const express = require("express");
+const path = require("path");
+
 const app = express();
 
-app.get("/", (req, res) => {
-    res.status(200).send("Home Page");
-});
+// setup static and middleware
+app.use(express.static("./public"));
 
-app.get("/about", (req, res) => {
-    res.status(200).send("About Page");
-});
+// app.get("/", (req, res) => {
+//     res.sendFile(path.resolve(__dirname, "./navbar-app/index.html"));
+//     1. adding to static assets
+//     2. SSR - Server Side Rendering
+// });
 
 app.all("*", (req, res) => {
-    res.status(404).send("<h1>Resource not found</h1>");
+    res.status(404).send("resource not found");
 });
 
 app.listen(5000, () => {
-    console.log("server is listening on port 5000...");
+    console.log("Server is listening on port 5000....");
 });
-
-// app.get
-// app.post
-// app.put
-// app.delete
-// app.use
-// app.all
-// app.listen
