@@ -1,22 +1,18 @@
 const express = require("express");
 const app = express();
 
-// req => middleware => res
-const logger = (req, res, next) => {
-    const method = req.method;
-    const url = req.url;
-    const date = new Date().getFullYear();
-    console.log(method, url, date);
-    next();
-};
+const people = require("./routes/people");
+const login = require("./routes/auth");
 
-app.get("/", logger, (req, res) => {
-    res.send("Home Page");
-});
+// static assets
+app.use(express.static("./methods-public"));
+// parse form data
+app.use(express.urlencoded({ extended: false }));
+// parse json
+app.use(express.json());
 
-app.get("/about", logger, (req, res) => {
-    res.send("About Page");
-});
+app.use("/login", login);
+app.use("/api/people", people);
 
 app.listen(5000, () => {
     console.log("Server is listening on port 5000");
